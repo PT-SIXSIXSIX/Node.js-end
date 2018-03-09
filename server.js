@@ -62,9 +62,9 @@ app.post('/api/v1/login', urlencodedParser, function (req, res){
   });
 });
 
-app.post('/sms/get', [urlencodedParser, jwtAuth], function (req, res){
-  console.log(req.body.phone);
-  var phone = req.body.phone;
+app.get('/api/v1/sms/get', function (req, res){
+  console.log(req.query.phone);
+  var phone = req.query.phone;
   request({
     url: config.bmob_req_url,
     method: "POST",
@@ -79,10 +79,10 @@ app.post('/sms/get', [urlencodedParser, jwtAuth], function (req, res){
   });
 });
 
-app.post('/sms/verify', [urlencodedParser, jwtAuth], function (req, res){
-  console.log(req.body);
-  var smsCode = req.body.sms_code;
-  var phone = req.body.phone;
+app.get('/api/v1/sms/verify', function (req, res){
+  console.log(req.query);
+  var smsCode = req.query.sms_code;
+  var phone = req.query.phone;
   request({
     url: config.bmob_verify_url + smsCode,
     method: "POST",
