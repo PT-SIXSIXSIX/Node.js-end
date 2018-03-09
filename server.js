@@ -38,7 +38,7 @@ app.post('/api/v1/images', function (req, res) {
       res.end(JSON.stringify(value));
   }).catch(function onRejected(error){
       res.sendStatus(400);
-      res.status(400).end(JSON.stringify({'status_code': 1, 'error_desc': error}));
+      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': error}));
   });
 })
 
@@ -62,7 +62,7 @@ app.post('/api/v1/login', urlencodedParser, function (req, res){
   });
 });
 
-app.get('/api/v1/sms/get', function (req, res){
+app.get('/api/v1/sms/', function (req, res){
   console.log(req.query.phone);
   var phone = req.query.phone;
   request({
@@ -75,7 +75,7 @@ app.get('/api/v1/sms/get', function (req, res){
       if (!error && response.statusCode == 200) {
         res.end(JSON.stringify({'msg': 'OK'}));
       }
-      res.status(400).end(JSON.stringify({'status_code': 1, 'error_desc': error}));
+      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': error}));
   });
 });
 
@@ -95,7 +95,7 @@ app.get('/api/v1/sms/verify', function (req, res){
         console.log(error);
         res.end(JSON.stringify({'msg': 'OK'}));
       }
-      res.status(400).end(JSON.stringify({'status_code': 1, 'error_desc': 'wrong code'}));
+      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': 'wrong code'}));
   });
 });
 
