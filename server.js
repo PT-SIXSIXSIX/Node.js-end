@@ -17,7 +17,9 @@ var app = express();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.set('jwtTokenSecret', config.jwtTokenSecret);
+
 app.use(multer({ dest: '/tmp/'}).array('image'));
+app.use(bodyParser.json());
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
@@ -58,15 +60,6 @@ app.post('/api/v1/login', urlencodedParser, function (req, res){
     role: 1,
     accessToken: token
   });
-});
-
-app.post('/api/v1/json', function (req, res){
-  var body = '';
-  req.on('data', function (chunk) {
-    body += chunk; //读取参数流转化为字符串
-  });
-  console.log(body);
-  res.end();
 });
 
 app.post('/sms/get', [urlencodedParser, jwtAuth], function (req, res){
