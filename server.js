@@ -90,11 +90,14 @@ app.get('/api/v1/sms/verify', function (req, res){
     headers: config.bmob_sms_headers,
     body: {'mobilePhoneNumber': phone}
   }, function(error, response, body) {
+      console.log(response.statusCode, body);
       if (!error && response.statusCode == 200) {
         console.log(response);
         console.log(error);
+        console.log('OK');
         res.end(JSON.stringify({'msg': 'OK'}));
       }
+      console.log('error'); 
       res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': 'wrong code'}));
   });
 });
