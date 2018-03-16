@@ -75,33 +75,55 @@ app.get('/api/v1/sms/', function (req, res){
       if (!error && response.statusCode == 200) {
         res.end(JSON.stringify({'msg': 'OK'}));
       }
-      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': error}));
+      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': '获取验证码失败！'}));
   });
 });
 
 app.get('/api/v1/sms/verify', function (req, res){
   console.log(req.query);
-  var smsCode = req.query.sms_code;
+  var smsCode = req.query.smsCode;
   var phone = req.query.phone;
+  console.log(config.bmob_verify_url + smsCode);
   request({
     url: config.bmob_verify_url + smsCode,
     method: "POST",
-    json: true,
+    json: {'mobilePhoneNumber': phone},
     headers: config.bmob_sms_headers,
-    body: {'mobilePhoneNumber': phone}
   }, function(error, response, body) {
       console.log(response.statusCode, body);
+    console.log(response.statusCode, body);
       if (!error && response.statusCode == 200) {
         console.log(response);
         console.log(error);
         console.log('OK');
         res.end(JSON.stringify({'msg': 'OK'}));
       }
-      console.log('error'); 
-      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': 'wrong code'}));
+      console.log(error);
+      res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': '验证码错误'}))
   });
 });
 
+app.get('/api/v1/users/:id/store', function (req, res){
+  console.log('getStore:')
+  var data = {
+    "name": "Hello, world!",
+    "phone": "18983944359",
+    "reservePhone": "13290035875",
+    "companyName": "Hello, world!",
+    "location": "Hello, world!",
+    "idCard": "411111199911118888",
+    "picHeadUrl": "http://p57uimjto.bkt.clouddn.com/ykat/background-4.png",
+    "picTailUrl": "http://p57uimjto.bkt.clouddn.com/ykat/background-6.png",
+    "serviceType": "Hello, world!",
+    "deposit": 1,
+    "createdAt": "Hello, world!"
+  };
+  res.end(JSON.stringify(data));
+});
+
+app.put('/api/v1/users/:id/store', function (req, res){
+  console.log('putStore:', req.body);
+});
 
 var server = app.listen(8081, function () {
 
