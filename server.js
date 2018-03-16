@@ -65,6 +65,7 @@ app.post('/api/v1/login', urlencodedParser, function (req, res){
 app.get('/api/v1/sms/', function (req, res){
   console.log(req.query.phone);
   var phone = req.query.phone;
+  console.log(config.bmob_req_url, config.bmob_sms_headers);
   request({
     url: config.bmob_req_url,
     method: "POST",
@@ -72,6 +73,7 @@ app.get('/api/v1/sms/', function (req, res){
     headers: config.bmob_sms_headers,
     body: {'mobilePhoneNumber': phone}
   }, function(error, response, body) {
+    console.log(response.statusCode, body);
       if (!error && response.statusCode == 200) {
         res.end(JSON.stringify({'msg': 'OK'}));
       }
@@ -90,12 +92,8 @@ app.get('/api/v1/sms/verify', function (req, res){
     json: {'mobilePhoneNumber': phone},
     headers: config.bmob_sms_headers,
   }, function(error, response, body) {
-      console.log(response.statusCode, body);
-    console.log(response.statusCode, body);
       if (!error && response.statusCode == 200) {
-        console.log(response);
-        console.log(error);
-        console.log('OK');
+        console.log(response.statusCode, body);
         res.end(JSON.stringify({'msg': 'OK'}));
       }
       console.log(error);
