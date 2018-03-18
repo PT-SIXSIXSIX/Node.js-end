@@ -29,15 +29,13 @@ app.all('*', function(req, res, next) {
 });
 
 app.post('/api/v1/images', function (req, res) {
-  console.log(req.files);
   file = req.files[0];
 
   var key = md5(file.originalname);
-  var promise = qiniuFunc.uploadFile(key, file.path).then(function onFulfilled(value){
+  var promise = qiniuFunc.uploadFile(key, file.path).then(function(value){
       console.log(value);
       res.end(JSON.stringify(value));
-  }).catch(function onRejected(error){
-      res.sendStatus(400);
+  }).catch(function (error){
       res.status(400).end(JSON.stringify({'statusCode': 1, 'errorDesc': error}));
   });
 })

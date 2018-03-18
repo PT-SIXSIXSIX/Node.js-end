@@ -15,11 +15,12 @@ exports.uploadFile = function (key, file){
   return new Promise(function (resolve, reject){
     formUploader.putFile(uploadToken, key, file, putExtra, function(respErr,
       respBody, respInfo) {
-      if (!respErr) {
-        resolve({'url': qiniuConfig.domain + '/' +respBody.key});
-      }
-      else {
-        reject();
+      if (respErr) {
+          reject('上传图片失败');
+      } else if (respInfo.statusCode !== 200) {
+          reject('上传图片失败: ' + respInfo.data.error);
+      } else {
+          resolve({'url': qiniuConfig.domain + '/' +respBody.key});
       }
     });
   })
