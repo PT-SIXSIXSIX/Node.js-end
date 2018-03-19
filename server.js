@@ -22,7 +22,7 @@ app.use(multer({ dest: '/tmp/'}).array('image'));
 app.use(bodyParser.json());
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Accept, Content-Type, X-YKAT-USER-ID, X-YKAT-ACCESS-TOKEN");
+    res.header("Access-Control-Allow-Headers", "Accept, X-File-Name, Content-Type, X-YKAT-USER-ID, X-YKAT-ACCESS-TOKEN");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("Content-Type", "application/json;charset=utf-8");
     next();

@@ -9,7 +9,7 @@ qiniuConfig.secretKey = process.env.X_Qiniu_Secret_Key || '';
 qiniuConfig.bucket = 'ykat';
 qiniuConfig.options = {
   scope: qiniuConfig.bucket,
-  expires: 7200
+  expires: 86400
 };
 
 exports.qiniuConfig = qiniuConfig;
